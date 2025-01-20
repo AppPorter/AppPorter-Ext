@@ -1,0 +1,13 @@
+{
+  "name": "AppPorter Ext",
+  "description": "Official AppPorter Extension",
+  "version": "1.0",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "main.html"
+  },
+  "permissions": ["menus"],
+  "background": {
+    "scripts": ["main.js"]
+  }
+}
