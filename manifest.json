@@ -6,7 +6,11 @@
   "action": {
     "default_popup": "main.html"
   },
-  "permissions": ["menus"],
+  "permissions": ["menus", "activeTab", "downloads", "storage"],
+  "host_permissions": ["*://127.0.0.1:9002/*"],
+  "content_security_policy": {
+    "extension_pages": "default-src 'self'; connect-src 'self' ws://127.0.0.1:9002 wss://127.0.0.1:9002"
+  },
   "background": {
     "scripts": ["main.js"]
   }
