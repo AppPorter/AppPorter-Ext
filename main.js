@@ -14,79 +14,69 @@ browser.menus.onClicked.addListener((info, tab) => {
 
 // WebSocket connection state
 let isConnecting = false
-let reconnectAttempts = 0
-const MAX_RECONNECT_ATTEMPTS = 5
 let ws = null
 
-// WebSocket connection function with improved retry logic
-function connectWebSocket() {
+// WebSocket connection function
+async function connectWebSocket() {
   if (isConnecting) return null
 
   isConnecting = true
   const wsUrl = 'ws://127.0.0.1:9002'
-  const ws = new WebSocket(wsUrl)
+  let socket = new WebSocket(wsUrl)
 
-  const resetConnection = () => {
-    isConnecting = false
-    reconnectAttempts = 0
-  }
-
-  ws.addEventListener('open', (event) => {
-    console.log('Connected to AppPorter WebSocket server')
-    resetConnection()
-  })
-
-  ws.addEventListener('message', (event) => {
-    const message = event.data
-    console.log('Message from server:', message)
-  })
-
-  ws.addEventListener('close', (event) => {
-    isConnecting = false
-    ws = null
-  })
-
-  ws.addEventListener('error', (event) => {
-    isConnecting = false
-    ws = null
-  })
-
-  return ws
-}
-
-// Send message with connection handling
-async function sendToServer(data) {
-  if (!ws || ws.readyState !== WebSocket.OPEN) {
-    ws = connectWebSocket()
-    if (!ws) return
-
-    // Wait for connection to be established
+  try {
     await new Promise((resolve, reject) => {
-      const timeout = setTimeout(
-        () => reject(new Error('Connection timeout')),
-        5000
-      )
-
-      ws.addEventListener(
+      socket.addEventListener(
         'open',
         () => {
-          clearTimeout(timeout)
-          resolve()
+          console.log('Connected to AppPorter WebSocket server')
+          isConnecting = false
+          resolve(socket)
         },
         { once: true }
       )
 
-      ws.addEventListener(
+      socket.addEventListener(
         'error',
         () => {
-          clearTimeout(timeout)
+          isConnecting = false
           reject(new Error('Connection failed'))
         },
         { once: true }
       )
     })
-  }
 
-  ws.send(data)
-  console.log('Sent to server:', data)
+    return socket
+  } catch (error) {
+    isConnecting = false
+    return null
+  }
+}
+
+function showError(message) {
+  browser.notifications.create({
+    type: 'basic',
+    iconUrl: 'icon-48.png',
+    title: 'AppPorter Error',
+    message: message,
+  })
+}
+
+// Send message with connection handling
+async function sendToServer(data) {
+  try {
+    if (!ws || ws.readyState !== WebSocket.OPEN) {
+      ws = await connectWebSocket()
+      if (!ws) {
+        showError('Failed to connect to AppPorter server')
+        return
+      }
+    }
+
+    ws.send(data)
+    console.log('Sent to server:', data)
+  } catch (error) {
+    showError('Failed to connect to AppPorter server')
+    console.error('Connection error:', error)
+  }
 }
