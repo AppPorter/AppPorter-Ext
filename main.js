@@ -6,7 +6,7 @@ browser.menus.create({
 })
 
 // Add menu click handler
-browser.menus.onClicked.addListener((info, tab) => {
+browser.menus.onClicked.addListener((info) => {
   if (info.menuItemId === 'Install and Subscribe' && info.linkUrl) {
     sendToServer(info.linkUrl)
   }
@@ -21,7 +21,7 @@ async function connectWebSocket() {
   if (isConnecting) return null
 
   isConnecting = true
-  const wsUrl = 'ws://127.0.0.1:9002'
+  const wsUrl = 'ws://127.0.0.1:7535'
   let socket = new WebSocket(wsUrl)
 
   try {

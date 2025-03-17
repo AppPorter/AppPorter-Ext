@@ -13,9 +13,9 @@
     "storage",
     "notifications"
   ],
-  "host_permissions": ["*://127.0.0.1:9002/*"],
+  "host_permissions": ["*://127.0.0.1:7535/*"],
   "content_security_policy": {
-    "extension_pages": "default-src 'self'; connect-src 'self' ws://127.0.0.1:9002 wss://127.0.0.1:9002"
+    "extension_pages": "default-src 'self'; connect-src 'self' ws://127.0.0.1:7535 wss://127.0.0.1:7535"
   },
   "background": {
     "scripts": ["main.js"]
