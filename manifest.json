@@ -13,11 +13,14 @@
     "extension_pages": "default-src 'self'; connect-src 'self' ws://127.0.0.1:7535 wss://127.0.0.1:7535"
   },
   "background": {
+    "service_worker": "main.js",
     "scripts": ["main.js"]
   },
   "icons": {
-    "16": "appporter.svg",
-    "32": "appporter.svg",
-    "64": "appporter.svg"
+    "16": "appporter.png",
+    "32": "appporter.png",
+    "48": "appporter.png",
+    "64": "appporter.png",
+    "128": "appporter.png"
   }
 }

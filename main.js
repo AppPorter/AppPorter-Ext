@@ -1,8 +1,9 @@
-// Create context menu
-chrome.contextMenus.create({
-  id: 'Install and Subscribe',
-  title: 'Install and Subscribe',
-  contexts: ['link'],
+chrome.contextMenus.removeAll(() => {
+  chrome.contextMenus.create({
+    id: 'Install and Subscribe',
+    title: 'Install and Subscribe',
+    contexts: ['link'],
+  })
 })
 
 // Add menu click handler
