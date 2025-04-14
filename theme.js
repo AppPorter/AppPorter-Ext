@@ -32,6 +32,24 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
+  // Add click handler to GitHub link to close popup
+  const githubLink = document.getElementById('github-link')
+  if (githubLink) {
+    githubLink.addEventListener('click', function (event) {
+      // Prevent default link behavior
+      event.preventDefault()
+
+      // Get the href attribute
+      const url = this.getAttribute('href')
+
+      // Open link in new tab
+      chrome.tabs.create({ url: url })
+
+      // Close the popup immediately
+      window.close()
+    })
+  }
+
   // Initial theme check (redundant but keeping for safety)
   updateTheme()
 
