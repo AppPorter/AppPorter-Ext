@@ -59,7 +59,7 @@ html.dark .container {
 
 /* Show white GitHub icon in dark mode */
 html.dark .github-icon {
-  content: url('assets/github-mark-white.svg');
+  content: url('assets/github-white.svg');
 }
 
 .app-info {
