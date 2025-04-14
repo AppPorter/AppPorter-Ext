@@ -13,13 +13,22 @@
 document.addEventListener('DOMContentLoaded', function () {
   // Function to update theme based on system preference
   function updateTheme() {
-    if (
+    const isDarkMode =
       window.matchMedia &&
       window.matchMedia('(prefers-color-scheme: dark)').matches
-    ) {
+
+    if (isDarkMode) {
       document.documentElement.classList.add('dark')
     } else {
       document.documentElement.classList.remove('dark')
+    }
+
+    // Update GitHub icon based on theme
+    const githubIcon = document.getElementById('github-icon')
+    if (githubIcon) {
+      githubIcon.src = isDarkMode
+        ? 'assets/github-mark-white.svg'
+        : 'assets/github-mark.svg'
     }
   }
 

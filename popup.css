@@ -30,12 +30,37 @@ html.dark .container {
   display: flex;
   align-items: center;
   margin-bottom: 16px;
+  position: relative;
 }
 
 .app-icon {
   width: 48px;
   height: 48px;
   margin-right: 12px;
+}
+
+.github-link {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease;
+}
+
+.github-link:hover {
+  opacity: 0.7;
+}
+
+.github-icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* Show white GitHub icon in dark mode */
+html.dark .github-icon {
+  content: url('assets/github-mark-white.svg');
 }
 
 .app-info {
