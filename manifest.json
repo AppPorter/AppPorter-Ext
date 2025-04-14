@@ -5,7 +5,7 @@
   "version": "1.0",
   "manifest_version": 3,
   "action": {
-    "default_popup": "main.html"
+    "default_popup": "popup.html"
   },
   "permissions": ["contextMenus", "notifications"],
   "host_permissions": ["http://127.0.0.1:7535/*"],
