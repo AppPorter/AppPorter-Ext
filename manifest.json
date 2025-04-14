@@ -1,19 +1,19 @@
 {
   "name": "AppPorter Ext",
+  "author": "u3l6",
   "description": "Official AppPorter Extension",
   "version": "1.0",
   "manifest_version": 3,
   "action": {
-    "default_popup": "main.html"
+    "default_popup": "main.html",
+    "default_icon": {
+      "16": "appporter.svg",
+      "32": "appporter.svg",
+      "64": "appporter.svg"
+    }
   },
-  "permissions": [
-    "menus",
-    "activeTab",
-    "downloads",
-    "storage",
-    "notifications"
-  ],
-  "host_permissions": ["*://127.0.0.1:7535/*"],
+  "permissions": ["contextMenus", "notifications"],
+  "host_permissions": ["http://127.0.0.1:7535/*"],
   "content_security_policy": {
     "extension_pages": "default-src 'self'; connect-src 'self' ws://127.0.0.1:7535 wss://127.0.0.1:7535"
   },

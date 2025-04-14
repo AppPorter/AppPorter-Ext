@@ -1,12 +1,12 @@
 // Create context menu
-browser.menus.create({
+chrome.contextMenus.create({
   id: 'Install and Subscribe',
   title: 'Install and Subscribe',
   contexts: ['link'],
 })
 
 // Add menu click handler
-browser.menus.onClicked.addListener((info) => {
+chrome.contextMenus.onClicked.addListener((info) => {
   if (info.menuItemId === 'Install and Subscribe' && info.linkUrl) {
     sendToServer(info.linkUrl)
   }
@@ -54,9 +54,9 @@ async function connectWebSocket() {
 }
 
 function showError(message) {
-  browser.notifications.create({
+  chrome.notifications.create({
     type: 'basic',
-    iconUrl: 'icon-48.png',
+    iconUrl: 'appporter.svg',
     title: 'AppPorter Error',
     message: message,
   })
