@@ -5,12 +5,7 @@
   "version": "1.0",
   "manifest_version": 3,
   "action": {
-    "default_popup": "main.html",
-    "default_icon": {
-      "16": "appporter.svg",
-      "32": "appporter.svg",
-      "64": "appporter.svg"
-    }
+    "default_popup": "main.html"
   },
   "permissions": ["contextMenus", "notifications"],
   "host_permissions": ["http://127.0.0.1:7535/*"],
@@ -19,5 +14,10 @@
   },
   "background": {
     "scripts": ["main.js"]
+  },
+  "icons": {
+    "16": "appporter.svg",
+    "32": "appporter.svg",
+    "64": "appporter.svg"
   }
 }
