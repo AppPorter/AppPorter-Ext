@@ -1,14 +1,14 @@
 chrome.contextMenus.removeAll(() => {
   chrome.contextMenus.create({
-    id: 'Install and Subscribe',
-    title: 'Install and Subscribe',
+    id: 'Open with AppPorter',
+    title: 'Open with AppPorter',
     contexts: ['link'],
   })
 })
 
 // Add menu click handler
 chrome.contextMenus.onClicked.addListener((info) => {
-  if (info.menuItemId === 'Install and Subscribe' && info.linkUrl) {
+  if (info.menuItemId === 'Open with AppPorter' && info.linkUrl) {
     sendToServer(info.linkUrl)
   }
 })
