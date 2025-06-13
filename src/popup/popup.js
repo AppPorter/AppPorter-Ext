@@ -27,8 +27,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const githubIcon = document.getElementById('github-icon')
     if (githubIcon) {
       githubIcon.src = isDarkMode
-        ? 'assets/github-white.svg'
-        : 'assets/github-black.svg'
+        ? '/assets/github-white.svg'
+        : '/assets/github-black.svg'
     }
   }
 

@@ -5,7 +5,7 @@
   "version": "1.0",
   "manifest_version": 3,
   "action": {
-    "default_popup": "popup.html"
+    "default_popup": "src/popup/popup.html"
   },
   "permissions": ["contextMenus", "notifications"],
   "host_permissions": ["http://127.0.0.1:7535/*"],
@@ -13,14 +13,14 @@
     "extension_pages": "default-src 'self'; connect-src 'self' ws://127.0.0.1:7535 wss://127.0.0.1:7535"
   },
   "background": {
-    "service_worker": "background.js",
-    "scripts": ["background.js"]
+    "service_worker": "src/background.js",
+    "scripts": ["src/background.js"]
   },
   "icons": {
-    "16": "appporter.png",
-    "32": "appporter.png",
-    "48": "appporter.png",
-    "64": "appporter.png",
-    "128": "appporter.png"
+    "16": "assets/appporter.png",
+    "32": "assets/appporter.png",
+    "48": "assets/appporter.png",
+    "64": "assets/appporter.png",
+    "128": "assets/appporter.png"
   }
 }
