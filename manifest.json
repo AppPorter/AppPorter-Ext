@@ -14,7 +14,8 @@
   },
   "background": {
     "service_worker": "src/background.js",
-    "scripts": ["src/background.js"]
+    "scripts": ["src/background.js"],
+    "type": "module"
   },
   "icons": {
     "16": "assets/appporter.png",

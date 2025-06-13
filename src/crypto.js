@@ -149,3 +149,6 @@ class CryptoManager {
 
 // Export singleton instance
 const cryptoManager = new CryptoManager()
+
+// Export for ES6 modules
+export { cryptoManager }

@@ -1,3 +1,6 @@
+// Import crypto utilities
+import { cryptoManager } from './crypto.js'
+
 chrome.contextMenus.removeAll(() => {
   chrome.contextMenus.create({
     id: 'Open with AppPorter',
@@ -12,9 +15,6 @@ chrome.contextMenus.onClicked.addListener((info) => {
     sendToServer(info.linkUrl)
   }
 })
-
-// Import crypto utilities
-importScripts('crypto.js')
 
 // WebSocket connection state
 let isConnecting = false
