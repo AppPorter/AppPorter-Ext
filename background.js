@@ -13,6 +13,9 @@ chrome.contextMenus.onClicked.addListener((info) => {
   }
 })
 
+// Import crypto utilities
+importScripts('crypto.js')
+
 // WebSocket connection state
 let isConnecting = false
 let ws = null
@@ -29,10 +32,39 @@ async function connectWebSocket() {
     await new Promise((resolve, reject) => {
       socket.addEventListener(
         'open',
-        () => {
+        async () => {
           console.log('Connected to AppPorter WebSocket server')
-          isConnecting = false
-          resolve(socket)
+
+          // Send handshake message
+          const handshakeMsg = JSON.stringify({ type: 'handshake' })
+          socket.send(handshakeMsg)
+
+          // Wait for handshake response
+          socket.addEventListener(
+            'message',
+            (event) => {
+              try {
+                const response = JSON.parse(event.data)
+                if (
+                  response.type === 'handshake_response' &&
+                  response.status === 'ready'
+                ) {
+                  console.log('Handshake completed successfully')
+                  isConnecting = false
+                  cryptoManager.setSessionKey(
+                    response.session_key,
+                    response.session_id
+                  ) // Set session key and ID
+                  resolve(socket)
+                }
+              } catch (e) {
+                console.error('Handshake failed:', e)
+                isConnecting = false
+                reject(new Error('Handshake failed'))
+              }
+            },
+            { once: true }
+          )
         },
         { once: true }
       )
@@ -63,7 +95,7 @@ function showError(message) {
   })
 }
 
-// Send message with connection handling
+// Send message with encryption
 async function sendToServer(data) {
   try {
     if (!ws || ws.readyState !== WebSocket.OPEN) {
@@ -72,12 +104,39 @@ async function sendToServer(data) {
         showError('Failed to connect to AppPorter server')
         return
       }
-    }
+    } // Encrypt the URL before sending
+    const encrypted = await cryptoManager.encryptData(data)
+    const message = JSON.stringify({
+      type: 'encrypted_url',
+      data: encrypted.data,
+      nonce: encrypted.nonce,
+      session_id: cryptoManager.getSessionId(),
+    })
 
-    ws.send(data)
-    console.log('Sent to server:', data)
+    ws.send(message)
+    console.log('Sent encrypted data to server')
+
+    // Listen for encrypted response
+    ws.addEventListener(
+      'message',
+      async (event) => {
+        try {
+          const response = JSON.parse(event.data)
+          if (response.type === 'encrypted_response') {
+            const decryptedResponse = await cryptoManager.decryptData(
+              response.data,
+              response.nonce
+            )
+            console.log('Received encrypted response:', decryptedResponse)
+          }
+        } catch (e) {
+          console.error('Failed to decrypt response:', e)
+        }
+      },
+      { once: true }
+    )
   } catch (error) {
-    showError('Failed to connect to AppPorter server')
-    console.error('Connection error:', error)
+    showError('Failed to send encrypted data to AppPorter server')
+    console.error('Encryption or connection error:', error)
   }
 }
