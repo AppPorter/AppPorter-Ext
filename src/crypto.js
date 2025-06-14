@@ -47,7 +47,6 @@ class CryptoManager {
       this.sessionKey = Uint8Array.from(atob(keyB64), (c) => c.charCodeAt(0))
       this.sessionId = sessionIdStr
       this.cryptoKey = null // Reset crypto key to force re-initialization
-      console.log('Session key established')
     } catch (e) {
       console.error('Failed to set session key:', e)
     }

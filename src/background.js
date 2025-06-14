@@ -33,8 +33,6 @@ async function connectWebSocket() {
       socket.addEventListener(
         'open',
         async () => {
-          console.log('Connected to AppPorter WebSocket server')
-
           // Send handshake message
           const handshakeMsg = JSON.stringify({ type: 'handshake' })
           socket.send(handshakeMsg)
@@ -49,7 +47,6 @@ async function connectWebSocket() {
                   response.type === 'handshake_response' &&
                   response.status === 'ready'
                 ) {
-                  console.log('Handshake completed successfully')
                   isConnecting = false
                   cryptoManager.setSessionKey(
                     response.session_key,
@@ -114,7 +111,6 @@ async function sendToServer(data) {
     })
 
     ws.send(message)
-    console.log('Sent encrypted data to server')
 
     // Listen for encrypted response
     ws.addEventListener(
@@ -127,7 +123,6 @@ async function sendToServer(data) {
               response.data,
               response.nonce
             )
-            console.log('Received encrypted response:', decryptedResponse)
           }
         } catch (e) {
           console.error('Failed to decrypt response:', e)
